@@ -1,0 +1,191 @@
+<!-- chat aonde fica tudo escrito -->
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Chat por Voz com VLibras</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    #chat {
+      border: 1px solid #ccc;
+      padding: 10px;
+      height: 300px;
+      overflow-y: auto;
+      margin-bottom: 10px;
+    }
+    button {
+      padding: 10px;
+      margin-right: 10px;
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Fale e o Chat Escreve</h1>
+
+  <div id="chat"></div>
+  <button id="start">🎤 Começar a Falar</button>
+  <button id="stop">🛑 Parar</button>
+
+  
+  <!-- VLibras Plugin -->
+  <div vw class="enabled">
+    <div vw-access-button class="active"></div>
+    <div vw-plugin-wrapper>
+      <div class="vw-plugin-top-wrapper"></div>
+    </div>
+  </div>
+  <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+  <script>
+    new window.VLibras.Widget('https://vlibras.gov.br/app');
+  </script>
+
+  
+  <!-- Script de Reconhecimento de Voz contínuo -->
+  <script>
+    const chat = document.getElementById("chat");
+    const startBtn = document.getElementById("start");
+    const stopBtn = document.getElementById("stop");
+
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+    if (!SpeechRecognition) {
+      alert("Seu navegador não suporta reconhecimento de voz.");
+    } else {
+      const recognition = new SpeechRecognition();
+      recognition.lang = "pt-BR";
+      recognition.continuous = true;
+      recognition.interimResults = false;
+
+      let isListening = false;
+
+      recognition.onresult = (event) => {
+        for (let i = event.resultIndex; i < event.results.length; i++) {
+          if (event.results[i].isFinal) {
+            const msg = event.results[i][0].transcript.trim();
+            const p = document.createElement("p");
+            p.innerText = msg;
+            chat.appendChild(p);
+            chat.scrollTop = chat.scrollHeight;
+          }
+        }
+      };
+
+      recognition.onend = () => {
+        if (isListening) {
+          recognition.start(); // Reinicia automaticamente se ainda estiver ativo
+        }
+      };
+
+      recognition.onerror = (event) => {
+        console.error("Erro no reconhecimento de voz:", event.error);
+      };
+
+      startBtn.onclick = () => {
+        if (!isListening) {
+          isListening = true;
+          recognition.start();
+        }
+      };
+
+      stopBtn.onclick = () => {
+        isListening = false;
+        recognition.stop();
+      };
+    }
+  </script>
+
+</body>
+</html>
+
+
+<!-- Contato WhatsApp -->
+<p style="margin-top: 10px;">
+  <strong>Fale conosco pelo WhatsApp:</strong><br>
+  <a href="https://wa.me/21970652997" target="_blank" style="color: green; font-weight: bold;">
+    📱 Clique aqui para conversar
+  </a>
+</p>
+
+
+<!-- parte de como usar nosso app  -->
+<div style="margin-top: 20px; padding: 10px; border: 1px solid #ccc; border-radius: 8px;">
+  <h4>Como usar nosso app:</h4>
+  <p>
+    1. Clique em <strong>Começar a Falar</strong>.<br>
+    2. Permita o uso do <strong>microfone</strong>.<br>
+    3. Clique no <strong>ícone azul</strong> e depois aperte <strong>Pular</strong>.<br>
+    4. Isso vai pular a fala inicial do Ícaro e já começar a gravar sua voz.<br>
+    5. Um <strong>texto</strong> vai aparecer do lado esquerdo.<br>
+    6. Clique nesse texto e o Ícaro vai narrar para você.
+  </p>
+</div>
+
+
+<!-- Comentário com botão enviar -->
+<h3>Deixe seu comentário</h3>
+<textarea id="mensagem" rows="4" cols="50" placeholder="Escreva seu comentário aqui..."></textarea><br>
+<button onclick="enviarComentario()">Enviar</button>
+
+<!-- Onde os comentários aparecerão -->
+<div id="comentarios" style="margin-top: 15px;"></div>
+
+<script>
+  const textarea = document.getElementById("mensagem");
+  const comentariosDiv = document.getElementById("comentarios");
+
+  // Enviar com Enter
+  textarea.addEventListener("keypress", function (event) {
+    if (event.key === "Enter" && !event.shiftKey) {
+      event.preventDefault(); // Evita quebra de linha
+      enviarComentario();
+    }
+  });
+
+  function enviarComentario() {
+    const comentario = textarea.value.trim();
+    if (comentario) {
+      const novoComentario = document.createElement("p");
+      novoComentario.textContent = comentario;
+      novoComentario.style.borderBottom = "1px solid #ccc";
+      novoComentario.style.padding = "5px 0";
+      comentariosDiv.appendChild(novoComentario);
+      textarea.value = ""; // Limpa o campo
+    } else {
+      alert("Por favor, escreva algo antes de enviar.");
+    }
+  }
+</script>
+
+!-- Comentário adsense -->
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <title>Minha página com anúncios</title>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3561545053478118"
+     crossorigin="anonymous"></script>
+</head>
+<body>
+
+  <h1>Bem-vindo ao meu site</h1>
+
+  <!-- Local do anúncio -->
+  <ins class="adsbygoogle"
+       style="display:block"
+       data-ad-client="ca-pub-3561545053478118"
+       data-ad-slot="3997196501"
+       data-ad-format="auto"
+       data-full-width-responsive="true"></ins>
+  <script>
+       (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+
+  <p>Conteúdo do site aqui.</p>
+
+</body>
+</html>
